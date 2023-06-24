@@ -16,6 +16,7 @@ if ($_POST) {
 
     // ejecutando consulta
     $sentencia->execute();
+    header('location:index.php');
 }
 ?>
 

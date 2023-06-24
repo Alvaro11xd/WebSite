@@ -1,5 +1,15 @@
 <?php
 include("../../bd.php");
+
+// Eliminar servicio
+if (isset($_GET['id'])) {
+    $id = ($_GET['id']) ? $_GET['id'] : "";
+    $sentencia = $conexion->prepare("DELETE FROM tbl_servicios WHERE id=:id;");
+    $sentencia->bindParam(":id", $id);
+    $sentencia->execute();
+}
+
+
 $sentencia = $conexion->prepare("SELECT * FROM tbl_servicios;");
 $sentencia->execute();
 $servicios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -7,10 +17,11 @@ $servicios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php include("../../templates/header.php") ?>
-Listar servicios
+
 
 <div class="card">
     <div class="card-header">
+        <h2>Listar servicios</h2>
         <a class="btn btn-primary" href="crear.php" role="button">Crear nuevo servicio</a>
     </div>
     <div class="card-body">
@@ -33,9 +44,9 @@ Listar servicios
                             <td><?php echo $servicio['titulo']; ?></td>
                             <td><?php echo $servicio['descripcion']; ?></td>
                             <td>
-                                <a class="btn btn-warning" href="#" role="button">Editar</a>
+                                <a class="btn btn-warning" href="editar.php?id=<?php echo $servicio["ID"]; ?>" role="button">Editar</a>
                                 |
-                                <a class="btn btn-danger" href="#" role="button">Eliminar</a>
+                                <a class="btn btn-danger" href="index.php?id=<?php echo $servicio["ID"]; ?>" role="button">Eliminar</a>
                             </td>
                         </tr>
                     <?php } ?>
