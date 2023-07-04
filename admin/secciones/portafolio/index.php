@@ -3,10 +3,27 @@ include("../../bd.php");
 
 // Eliminar proyecto
 if (isset($_GET['id'])) {
-    $id = ($_GET['id']) ? $_GET['id'] : "";
+    $id = (isset($_GET['id'])) ? $_GET['id'] : "";
+
+    // Buscando imagen del portafolio
+    $sentencia = $conexion->prepare("SELECT imagen FROM tbl_portafolio WHERE id=:id;");
+    $sentencia->bindParam(":id", $id);
+    $sentencia->execute();
+    $registro_imagen=$sentencia->fetch(PDO::FETCH_LAZY);
+
+    // Borrando la imagen de la BD
+    if(isset($registro_imagen['imagen'])){
+        if(file_exists("../../../assets/img/portfolio/" . $registro_imagen['imagen'])){
+            // Borrar imagen
+            unlink("../../../assets/img/portfolio/" . $registro_imagen['imagen']);
+        }
+    }
+
+    // Borrando registro de la BD
     $sentencia = $conexion->prepare("DELETE FROM tbl_portafolio WHERE id=:id;");
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
+    
 }
 
 
@@ -44,10 +61,12 @@ $proyectos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <tr class="">
                             <td><?php echo $proyecto['ID']; ?></td>
                             <td>
-                                <?php echo $proyecto['titulo']; ?><br>
+                                <strong><?php echo $proyecto['titulo']; ?></strong><br>
                                 <?php echo $proyecto['subtitulo']; ?>
                             </td>
-                            <td><?php echo $proyecto['imagen']; ?></td>
+                            <td>
+                                <img width="50" src="../../../assets/img/portfolio/<?php echo $proyecto['imagen']; ?>" alt="">
+                            </td>
                             <td><?php echo $proyecto['descripcion']; ?></td>
                             <td><?php echo $proyecto['cliente']; ?></td>
                             <td><?php echo $proyecto['categoria']; ?></td>
