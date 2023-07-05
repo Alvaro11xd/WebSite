@@ -99,11 +99,14 @@ if ($_POST) {
                 <label for="subtitulo" class="form-label">Subtítulo:</label>
                 <input type="text" class="form-control" name="subtitulo" id="titulo" aria-describedby="helpId" placeholder="Ingrese el subtítulo" value="<?php echo $subtitulo; ?>">
             </div>
-            <div class="d-flex gap-5">
+            <!-- Imagen -->
+            <div class="d-flex align-items-center gap-5">
                 <div>
                     <img width="100" src="../../../assets/img/portfolio/<?php echo $imagen ?>" alt="">
                 </div>
-                <input type="file" class="form-control" name="imagen">
+                <div>
+                    <input type="file" class="form-control" name="imagen">
+                </div>
             </div>
             <div class="mb-3">
                 <label for="descripcion" class="form-label">Descripción:</label>

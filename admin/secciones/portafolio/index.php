@@ -9,11 +9,11 @@ if (isset($_GET['id'])) {
     $sentencia = $conexion->prepare("SELECT imagen FROM tbl_portafolio WHERE id=:id;");
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
-    $registro_imagen=$sentencia->fetch(PDO::FETCH_LAZY);
+    $registro_imagen = $sentencia->fetch(PDO::FETCH_LAZY);
 
     // Borrando la imagen de la BD
-    if(isset($registro_imagen['imagen'])){
-        if(file_exists("../../../assets/img/portfolio/" . $registro_imagen['imagen'])){
+    if (isset($registro_imagen['imagen'])) {
+        if (file_exists("../../../assets/img/portfolio/" . $registro_imagen['imagen'])) {
             // Borrar imagen
             unlink("../../../assets/img/portfolio/" . $registro_imagen['imagen']);
         }
@@ -23,10 +23,9 @@ if (isset($_GET['id'])) {
     $sentencia = $conexion->prepare("DELETE FROM tbl_portafolio WHERE id=:id;");
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
-    
 }
 
-
+// Recepcionando todos los datos de la BD
 $sentencia = $conexion->prepare("SELECT * FROM tbl_portafolio;");
 $sentencia->execute();
 $proyectos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -37,10 +36,13 @@ $proyectos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <div class="card">
+    <!-- Header de la card -->
     <div class="card-header">
         <h2>Lista de Proyectos</h2>
+        <!-- Botón para agregar -->
         <a class="btn btn-primary" href="crear.php" role="button">Crear nuevo proyecto</a>
     </div>
+    <!-- Cuerpo de la card -->
     <div class="card-body">
         <div class="table-responsive-sm">
             <table class="table">
@@ -81,7 +83,7 @@ $proyectos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
+
 <?php include("../../templates/footer.php") ?>

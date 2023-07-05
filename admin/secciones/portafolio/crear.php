@@ -49,9 +49,11 @@ if ($_POST) {
 <?php include("../../templates/header.php") ?>
 
 <div class="card">
+    <!-- Titulo de la card -->
     <div class="card-header">
         Producto del portafolio
     </div>
+    <!-- Cuerpo de la card -->
     <div class="card-body">
         <form action="" method="post" enctype="multipart/form-data">
 
