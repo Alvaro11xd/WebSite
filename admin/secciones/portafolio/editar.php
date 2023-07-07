@@ -8,6 +8,7 @@ if (isset($_GET['id'])) {
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
     $proyecto = $sentencia->fetch(PDO::FETCH_LAZY);
+    
     $titulo = $proyecto['titulo'];
     $subtitulo = $proyecto['subtitulo'];
     $imagen = $proyecto['imagen'];
