@@ -7,14 +7,11 @@ if ($_POST) {
     $correo = (isset($_POST['email'])) ? $_POST['email'] : "";
     $password = (isset($_POST['password'])) ? $_POST['password'] : "";
 
-    // Encriptar la contraseña
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
     // Realizar consulta para agregar un nuevo registro
     $sql = $conexion->prepare("INSERT INTO tbl_usuarios(usuario,password,correo) VALUES (:usuario,:password,:correo);");
     
     $sql->bindParam(":usuario", $usuario);
-    $sql->bindParam(":password", $hashedPassword);
+    $sql->bindParam(":password", $password);
     $sql->bindParam(":correo", $correo);
     
     // Ejecutar consulta

@@ -1,5 +1,35 @@
 <!-- Inicio de sesion para el admin -->
-<?php include("./bd.php"); ?>
+<?php 
+
+session_start();
+
+if($_POST){
+    include("./bd.php"); 
+    $user=(isset($_POST['user'])) ? $_POST['user'] : "";
+    $password=(isset($_POST['password'])) ? $_POST['password'] : "";
+
+    $sql=$conexion->prepare("SELECT *, count(*) as n_usuario FROM tbl_usuarios WHERE usuario=:usuario AND password=:password");
+    $sql->bindParam(":usuario",$user);
+    $sql->bindParam(":password",$password);
+
+    $sql->execute();
+
+    $resultado_usuario=$sql->fetch(PDO::FETCH_LAZY);
+
+    if($resultado_usuario['n_usuario']>0){
+        if($password==$resultado_usuario['password']){
+            print_r("El usuario y contraseña son correctos");
+            $_SESSION['usuario']=$resultado_usuario['usuario'];
+            $_SESSION['logueado']=true;
+        }else{
+            print_r("El usuario o contraseña son incorrectos");
+        }
+    }else{
+        print_r("El usuario no existe");
+    }
+}
+
+?>
 <!doctype html>
 <html lang="es">
 
@@ -14,7 +44,7 @@
 </head>
 
 <body>
-    <form action="" class="form">
+    <form action="" method="post" class="form">
         <h2 class="form-title">Inicia Sesión</h2>
         <p class="form-paragraph">¿Aún no tienes una cuenta? <a href="#" class="form-link">Entra aquí</a></p>
 
@@ -30,8 +60,7 @@
                 <span class="form-line"></span>
             </div>
 
-            <!-- <input type="submit" class="form-submit" value="Entrar"> -->
-            <a href="index.php" class="form-submit">Entrar</a>
+            <input type="submit" class="form-submit" value="Entrar">
         </div>
     </form>
 
