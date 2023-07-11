@@ -16,7 +16,8 @@ if ($_POST) {
 
     // ejecutando consulta
     $sentencia->execute();
-    header('location:index.php');
+    $mensaje="Registro agreagado con éxito";
+    header('location:index.php?mensaje='.$mensaje);
 }
 ?>
 
