@@ -8,7 +8,11 @@ if($_POST){
     $user=(isset($_POST['user'])) ? $_POST['user'] : "";
     $password=(isset($_POST['password'])) ? $_POST['password'] : "";
 
-    $sql=$conexion->prepare("SELECT *, count(*) as n_usuario FROM tbl_usuarios WHERE usuario=:usuario AND password=:password");
+    $sql=$conexion->prepare("SELECT *, count(*) as n_usuario
+        FROM tbl_usuarios
+        WHERE usuario=:usuario
+        AND password=:password;"
+        );
     $sql->bindParam(":usuario",$user);
     $sql->bindParam(":password",$password);
 
@@ -17,15 +21,12 @@ if($_POST){
     $resultado_usuario=$sql->fetch(PDO::FETCH_LAZY);
 
     if($resultado_usuario['n_usuario']>0){
-        if($password==$resultado_usuario['password']){
-            print_r("El usuario y contraseña son correctos");
-            $_SESSION['usuario']=$resultado_usuario['usuario'];
-            $_SESSION['logueado']=true;
-        }else{
-            print_r("El usuario o contraseña son incorrectos");
-        }
+        print_r("El usuario y contraseña existen");
+        $_SESSION['usuario']=$resultado_usuario['usuario'];
+        $_SESSION['logueado']=true;
+        header("location:index.php");
     }else{
-        print_r("El usuario no existe");
+        print_r("El usuario o la contraseña no existen");
     }
 }
 

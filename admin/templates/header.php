@@ -1,6 +1,15 @@
 
 <?php
+
+    // Validando si no existe el usuario
+    // entonces enviarlo al login
+    session_start();
+
     $url_base="http://localhost/CURSOS/PHP/SITIO%20WEB%20CON%20PHP%20Y%20MYSQL/admin/";
+
+    if(!isset($_SESSION['usuario'])){
+        header("location:" . $url_base . "login.php");
+    }
 ?>
 
 <!-- cabecera -->
@@ -29,7 +38,7 @@
                 <a class="nav-item nav-link" href="<?php echo $url_base;?>secciones/equipo/">Equipo</a>
                 <a class="nav-item nav-link" href="<?php echo $url_base;?>secciones/configuraciones/">Configuraciones</a>
                 <a class="nav-item nav-link" href="<?php echo $url_base;?>secciones/usuarios/">Usuarios</a>
-                <a class="nav-item nav-link" href="<?php echo $url_base;?>login.php">Cerrar sesión</a>
+                <a class="nav-item nav-link" href="<?php echo $url_base;?>cerrar.php">Cerrar sesión</a>
             </div>
         </nav>
     </header>

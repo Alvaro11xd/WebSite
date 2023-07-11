@@ -1,1 +1,5 @@
-Cerrar conexion a BD
+<?php   
+    session_start();
+    session_destroy();
+    header("location:./login.php");
+?>
